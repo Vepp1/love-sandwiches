@@ -1,6 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
+
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -8,11 +8,11 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
+
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
-
 
 
 def get_sales_data():
@@ -28,7 +28,7 @@ def get_sales_data():
         print("Data should be six numbers, separated by commas.")
         print("Example: 10,20,30,40,50,60\n")
 
-        data_str = input("Enter your data here:")
+        data_str = input("Enter your data here:\n")
 
         sales_data = data_str.split(",")
 
@@ -36,6 +36,7 @@ def get_sales_data():
             print("Data is valid!")
             break
     return sales_data
+
 
 def validate_data(values):
     """
@@ -65,6 +66,7 @@ def update_worksheet(data,worksheet):
     worksheet_to_update.append_row(data)
     print(f"{worksheet} worksheet updated succesfully\n")
 
+
 def calculate_surplus_data(sales_row):
     """
     Compare sales with stock and calculate the surplus for each item type.
@@ -84,6 +86,7 @@ def calculate_surplus_data(sales_row):
     
     return surplus_data
 
+
 def get_last_5_entries_sales():
     """
     Collects collums of data from sales worksheet, collecting
@@ -98,6 +101,7 @@ def get_last_5_entries_sales():
         columns.append(column[-5:])
 
     return columns
+
 
 def calculate_stock_data(data):
     """
@@ -114,6 +118,7 @@ def calculate_stock_data(data):
 
     return new_stock_data
 
+
 def main():
     """
     Run all program functions
@@ -129,6 +134,7 @@ def main():
     update_worksheet(stock_data, "stock")
 
 print("Welcome to Love Sandwiches Data Automation")
+
 
 main()
 
